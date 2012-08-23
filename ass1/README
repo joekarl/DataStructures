@@ -9,8 +9,8 @@ The linked list implementation is included in the linkedList.js file.
 Run compile.sh
 
 ===== Run =====
-Call the JSMain class and supply the main javascript file to run
-`java JSMain main.js`
+Call the JSMain class and supply the Sequence_Generation.js javascript file to run
+`java JSMain Sequence_Generation.js`
 
 
 ===== Run Tests =====
