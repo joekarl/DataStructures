@@ -21,7 +21,7 @@ typedef struct dl_list {
 dl_list *create_dl_list();
 
 //Create a node with a given data value and add it to a list
-void add_node(dl_list *list, unsigned long long data);
+void add_node(dl_list *list, unsigned int data);
 
 //Move the list->current to the next node in the list
 void increment_list(dl_list *list);

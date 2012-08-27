@@ -11,7 +11,7 @@ BUILD_TEST_OBJS = $(addprefix $(BUILD_DIR)/,$(TEST_OBJS))
 SRCS = $(OBJS,.o=.c)
 TEST_SRCS = 
 CC = gcc
-CFLAGS = 
+CFLAGS = -Wall -Werror
 LD = gcc
 LDFLAGS = 
 
