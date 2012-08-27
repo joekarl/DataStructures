@@ -25,7 +25,6 @@ var countPrint = function(list) {
 
 //create new number generator and generate the number sequence
 var seq = new HammingNumbersGenerator().
-  generateSequence(20);
+  generateSequence(num);
 
-countPrint(seq);
-
+println(seq.toString());
