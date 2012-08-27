@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include "hamming_numbers.h"
@@ -58,10 +57,13 @@ dl_list *generate_hamming_numbers(int n)
 
 //check to see if we have enough numbers in our list and see if the next iteration of numbers has any numbers that are part of the final list
 /*
-  Works like so:
-  final: [1,2,3,5]
-  temp: [4,6,9,10,15,25]
-  temp contains number thats less than the end of the final list therefore we have to go one iteration farther
+  n+1 generations of the hamming numbers will always contain the complete set of numbers for n generations
+  so we Check to see if the next iteration of the list terms has terms that will fit into the final list
+  like so: 
+    final: [1,2,3,5]
+    temp: [4,6,9,10,15,25]
+    temp contains numbers that are smaller than the largest number in the final list, therefore we must go one extra iteration of the number generation
+  this has a side effect of using one extra iteration to generate numbers but does create the correct results
 */
 int can_stop(dl_list *final, dl_list *temp, int n)
 {
