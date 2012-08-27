@@ -1,0 +1,9 @@
+Hamming numbers generator implementated in C.
+Double linked list implementation is provided.
+Makefile file provided to easily build/clean application.
+
+===== Compile =====
+`make`
+
+===== Run =====
+`./sequence_generation`
