@@ -26,7 +26,7 @@ int main(int argc, char **argv)
     n = strtol(argv[1], &error, 10);
     if (n <= 0 || (*error) != 0)
     {
-      printf("Invalid Input\n%s", help_string());
+      printf("Invalid Input\nDid you input the number of terms to generate?\n%s", help_string());
       return 1;
     }
   }

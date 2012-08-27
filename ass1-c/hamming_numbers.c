@@ -4,7 +4,7 @@
 
 int can_stop(dl_list *final, dl_list *temp, int n);
 
-dl_list *generate_terms(dl_list *list, int multiplier);
+dl_list *generate_terms(dl_list *list, unsigned int multiplier);
 
 dl_list *generate_hamming_numbers(int n) 
 {
@@ -68,13 +68,13 @@ dl_list *generate_hamming_numbers(int n)
 int can_stop(dl_list *final, dl_list *temp, int n)
 {
   rewind_list(temp);
-  int min = temp->current->data;
+  unsigned long long min = temp->current->data;
 
   return final->length >= n
     && get_list_node(final,n-1)->data <= min;
 }
 
-dl_list *generate_terms(dl_list *list, int multiplier)
+dl_list *generate_terms(dl_list *list, unsigned int multiplier)
 {
   dl_list *term_list = create_dl_list();
   rewind_list(list);

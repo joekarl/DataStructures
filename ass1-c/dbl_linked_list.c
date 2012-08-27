@@ -29,7 +29,7 @@ dl_list *create_dl_list()
   return list;
 }
 
-void add_node(dl_list *list, int data)
+void add_node(dl_list *list, unsigned long long data)
 {
   if (list->length == 0) 
   {
