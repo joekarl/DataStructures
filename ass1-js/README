@@ -1,0 +1,18 @@
+Hamming Numbers generator implementation in javascript
+The javascript is run through the Rhino javascript interpreter via the jvm.
+JSMain is a simple implementation of a javascript interpreter using the included java scripting manager.
+The hamming number generator is included in the hammingNumbers.js file.
+The linked list implementation is included in the linkedList.js file.
+
+
+===== Compile =====
+Run compile.sh
+
+===== Run =====
+Call the JSMain class and supply the Sequence_Generation.js javascript file to run
+`java JSMain Sequence_Generation.js`
+
+
+===== Run Tests =====
+Call the JSMain class and supply the tests javascript file to run
+`java JSMain tests.js`
