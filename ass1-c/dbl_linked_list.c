@@ -33,6 +33,7 @@ void add_node(dl_list *list, int data)
 {
   if (list->length == 0) 
   {
+    //initialize list and set length to 0
     dll_node *node = create_node(data);
     list->head = node;
     list->current = node;
@@ -41,6 +42,7 @@ void add_node(dl_list *list, int data)
   } 
   else 
   {
+    //add node to tail of list
     fast_forward(list);
     list->tail->next = create_node(data);
     list->tail->next->prev = list->tail;
@@ -51,6 +53,7 @@ void add_node(dl_list *list, int data)
 
 void increment_list(dl_list *list)
 {
+  //if current is null ignore call
   if (!list->current) return;
   list->current = list->current->next;
 }
@@ -66,6 +69,7 @@ void free_list(dl_list *list)
   list->head = NULL;
   list->tail = NULL;
   list->length = 0;
+  //loop through nodes freeing them one at a time
   while(list->current)
   {
     dll_node *next = list->current->next;
@@ -86,6 +90,7 @@ void print_list(dl_list *list)
   rewind_list(list);
   while(list->current){
     printf("%d",list->current->data);
+    //print seperator if not last in the list
     if (list->current != list->tail) 
     {
       printf(", ");
@@ -96,6 +101,8 @@ void print_list(dl_list *list)
   list->current = current;
 }
 
+//optimized to grab head or tail
+//if not head or tail O(n) to find node
 dll_node *get_list_node(dl_list *list, int index)
 {
   if (!index)
@@ -120,14 +127,16 @@ dll_node *get_list_node(dl_list *list, int index)
   }
 }
 
-
+//Assumes lists are already in ascending order
+//merges them in ascending order
 dl_list *merge_lists(dl_list *l1, dl_list *l2)
 {
   dl_list *merged_list = create_dl_list();
 
   rewind_list(l1);
   rewind_list(l2);
-
+  
+  //merge shared list indices
   while(l1->current && l2->current)
   {
     if (l1->current->data == l2->current->data)
@@ -148,6 +157,7 @@ dl_list *merge_lists(dl_list *l1, dl_list *l2)
     }
   }
 
+  //merge any leftover nodes
   while(l1->current)
   {
     add_node(merged_list, l1->current->data);

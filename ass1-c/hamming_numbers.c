@@ -45,17 +45,24 @@ dl_list *generate_hamming_numbers(int n)
   }
 
   free_list(temp);
-  temp = NULL:
+  temp = NULL;
 
   dl_list *copy_list = final;
   final = range_list(final, 0, n);
 
   free_list(copy_list);
-  copy_list = NULL:
+  copy_list = NULL;
 
   return final;
 }
 
+//check to see if we have enough numbers in our list and see if the next iteration of numbers has any numbers that are part of the final list
+/*
+  Works like so:
+  final: [1,2,3,5]
+  temp: [4,6,9,10,15,25]
+  temp contains number thats less than the end of the final list therefore we have to go one iteration farther
+*/
 int can_stop(dl_list *final, dl_list *temp, int n)
 {
   rewind_list(temp);

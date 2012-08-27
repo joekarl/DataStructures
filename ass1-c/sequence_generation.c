@@ -12,6 +12,7 @@ int main(int argc, char **argv)
 {
   int n = 0;
 
+  //If help or no options print help
   if (argc == 1 
     || strcmp(argv[1],"-h") == 0
     || strcmp(argv[1],"--help") == 0)
@@ -19,7 +20,7 @@ int main(int argc, char **argv)
     printf("%s", help_string());
     return 0;
   } 
-  else
+  else //try to convert argv[1] into a number or print invalid usage
   {
     char * error = 0;
     n = strtol(argv[1], &error, 10);
@@ -30,8 +31,10 @@ int main(int argc, char **argv)
     }
   }
 
+  //generate hamming number list
   dl_list *seq = generate_hamming_numbers(n);
 
+  //print it
   print_list(seq);
   printf("\n");
 
