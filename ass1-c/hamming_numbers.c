@@ -39,14 +39,19 @@ dl_list *generate_hamming_numbers(int n)
     free_list(l2);
     free_list(l3);
     free_list(l5);
+    l2 = NULL;
+    l3 = NULL;
+    l5 = NULL;
   }
 
   free_list(temp);
+  temp = NULL:
 
   dl_list *copy_list = final;
   final = range_list(final, 0, n);
 
   free_list(copy_list);
+  copy_list = NULL:
 
   return final;
 }
