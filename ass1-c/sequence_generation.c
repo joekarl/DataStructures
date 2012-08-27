@@ -38,5 +38,7 @@ int main(int argc, char **argv)
   print_list(seq);
   printf("\n");
 
+  free_list(seq);
+
   return 0;
 }

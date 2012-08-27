@@ -76,6 +76,7 @@ void free_list(dl_list *list)
     free_node(list->current);
     list->current = next;
   }
+  free(list);
 }
 
 void fast_forward(dl_list *list)
