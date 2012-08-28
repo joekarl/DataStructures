@@ -30,5 +30,7 @@ expectedOutput.add(36);
 
 assert(LinkedList.range(seq,0,20).toString() == expectedOutput.toString(), 'Sequence should output first 20 Hamming numbers');
 
+println(LinkedList.range(seq,0,20));
+
 //test arbitrary number in sequence
 assert(seq.get(1690).data == 2125764000, 'Sequence 1691 should equal 2125764000');

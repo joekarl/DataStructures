@@ -27,7 +27,7 @@ HammingNumbersGenerator.prototype = {
     return this.lFinal.length >= this.numberOfTermsToGenerate && this.lFinal.get(this.numberOfTermsToGenerate - 1).data <= min;
   },
   generateSequence: function(numberOfTermsToGenerate) {
-    this.numberOfTermsToGenerate = numberOfTermsToGenerate || 100;
+    this.numberOfTermsToGenerate = numberOfTermsToGenerate ? numberOfTermsToGenerate : 100;
     this.lFinal = new LinkedList();
     this.lTemp = new LinkedList();
     this.l2Terms = new LinkedList();
