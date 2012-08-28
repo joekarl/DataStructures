@@ -9,8 +9,10 @@ Hamming numbers generator implementated in C.
 ===== Testing =====
 There are some simple tests that just make sure things are behaving as they're supposed to.
 This tests the linked list implementation and the hamming numbers generator output.
+Run valgrind to make sure there are no memory leaks
 `make test`
 `./test` 
+`valgrind test`
 
 ===== Clean =====
 `make clean`
