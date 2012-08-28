@@ -16,15 +16,7 @@ HammingNumbersGenerator.prototype = {
     return newList;
   },
   //check to see if we have enough terms and can quit
-  /*
-    n+1 generations of the hamming numbers will always contain the complete set of numbers for n generations
-    so we Check to see if the next iteration of the list terms has terms that will fit into the final list
-    like so: 
-      final: [1,2,3,5]
-      temp: [4,6,9,10,15,25]
-      temp contains numbers that are smaller than the largest number in the final list, therefore we must go one extra iteration of the number generation
-    this has a side effect of using one extra iteration to generate numbers but does create the correct results
-  */
+  //see readme for explanation on why and how this works...
   hasEnoughTerms: function() {
     if (!this.lTemp.current) {
       return;
