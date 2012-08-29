@@ -14,7 +14,6 @@ dl_list *generate_hamming_numbers(int n)
   dl_list *l3 = NULL;
   dl_list *l5 = NULL;
 
-  add_node(final,1);
   add_node(temp,2);
   add_node(temp,3);
   add_node(temp,5);

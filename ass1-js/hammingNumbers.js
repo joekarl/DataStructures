@@ -34,7 +34,6 @@ HammingNumbersGenerator.prototype = {
     this.l3Terms = new LinkedList();
     this.l5Terms = new LinkedList();
   
-    this.lFinal.add(1);
     this.lTemp.add(2);
     this.lTemp.add(3);
     this.lTemp.add(5);
