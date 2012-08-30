@@ -58,6 +58,7 @@ dl_list *generate_hamming_numbers(int n)
 //see README for explanation on how this works
 int can_stop(dl_list *final, dl_list *temp, int n)
 {
+  printf("temp size: %d temp ptrs: %d\n", temp->length, temp->length * 2);
   rewind_list(temp);
   unsigned long long min = temp->current->data;
 
