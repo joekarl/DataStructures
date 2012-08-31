@@ -37,6 +37,8 @@ dl_list *generate_hamming_numbers(int n)
     dl_list *copy_list = final;
     final = merge_lists(final,temp,recycled_node_list);
     recycle_list_nodes(copy_list,recycled_node_list);
+    free_list(copy_list);
+
     generate_terms(temp,l2,2,recycled_node_list);
     generate_terms(temp,l3,3,recycled_node_list);
     generate_terms(temp,l5,5,recycled_node_list);
@@ -55,12 +57,17 @@ dl_list *generate_hamming_numbers(int n)
     recycle_list_nodes(l2,recycled_node_list);
     recycle_list_nodes(l3,recycled_node_list);
     recycle_list_nodes(l5,recycled_node_list);
-    
   }
 
   //printf("Sequence finished generating. Cleaning up....\n");
   
-  recycle_list_nodes(temp,recycled_node_list);
+  free_list(l2);
+  free_list(l3);
+  free_list(l5);
+  l2 = NULL;
+  l3 = NULL;
+  l5 = NULL;
+
   free_list(temp);
   temp = NULL;
 
