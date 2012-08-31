@@ -3,7 +3,7 @@
 #include "dbl_linked_list.h"
 
 
-dll_node *create_node(int data)
+dll_node *create_dll_node(unsigned long long data)
 {
   dll_node *node = malloc(sizeof(dll_node));
   node->next = NULL;
@@ -29,12 +29,12 @@ dl_list *create_dl_list()
   return list;
 }
 
-void add_node(dl_list *list, unsigned int data)
+void add_node(dl_list *list, dll_node *node)
 {
+  if (!node) return;
   if (list->length == 0) 
   {
     //initialize list and set length to 0
-    dll_node *node = create_node(data);
     list->head = node;
     list->current = node;
     list->tail = node;
@@ -44,7 +44,7 @@ void add_node(dl_list *list, unsigned int data)
   {
     //add node to tail of list
     fast_forward(list);
-    list->tail->next = create_node(data);
+    list->tail->next = node;
     list->tail->next->prev = list->tail;
     list->tail = list->tail->next;
     list->length++;
@@ -61,6 +61,27 @@ void increment_list(dl_list *list)
 void rewind_list(dl_list *list)
 {
   list->current = list->head;
+}
+
+dll_node *pop_list(dl_list *list)
+{
+  if (list && list->tail)
+  {
+    dll_node *node = list->tail;
+    list->tail = list->tail->prev;
+    list->length--;
+    if (list->tail)
+    {
+      list->tail->next = NULL;
+    } 
+    else
+    {
+      list->head = NULL;
+      list->current = NULL;
+    }
+    return node;
+  }
+  return NULL;
 }
 
 void free_list(dl_list *list)
@@ -90,7 +111,7 @@ void print_list(dl_list *list)
   dll_node *current = list->current;
   rewind_list(list);
   while(list->current){
-    printf("%d",list->current->data);
+    printf("%lld",list->current->data);
     //print seperator if not last in the list
     if (list->current != list->tail) 
     {
@@ -128,52 +149,6 @@ dll_node *get_list_node(dl_list *list, int index)
   }
 }
 
-//Assumes lists are already in ascending order
-//merges them in ascending order
-dl_list *merge_lists(dl_list *l1, dl_list *l2)
-{
-  dl_list *merged_list = create_dl_list();
-
-  rewind_list(l1);
-  rewind_list(l2);
-  
-  //merge shared list indices
-  while(l1->current && l2->current)
-  {
-    if (l1->current->data == l2->current->data)
-    {
-      add_node(merged_list, l1->current->data);
-      increment_list(l1);
-      increment_list(l2);
-    } 
-    else if (l1->current->data < l2->current->data)
-    {
-      add_node(merged_list, l1->current->data);
-      increment_list(l1);
-    } 
-    else
-    {
-      add_node(merged_list, l2->current->data);
-      increment_list(l2);
-    }
-  }
-
-  //merge any leftover nodes
-  while(l1->current)
-  {
-    add_node(merged_list, l1->current->data);
-    increment_list(l1);
-  }
-  
-  while(l2->current)
-  {
-    add_node(merged_list, l2->current->data);
-    increment_list(l2);
-  }
-
-  return merged_list;
-}
-
 dl_list *range_list(dl_list *list, int start, int end)
 {
   int i = 0;
@@ -183,7 +158,7 @@ dl_list *range_list(dl_list *list, int start, int end)
   {
     if (i++ >= start)
     {
-      add_node(range_list, list->current->data);
+      add_node(range_list, create_dll_node(list->current->data));
     }
     increment_list(list);
   }
