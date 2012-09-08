@@ -7,25 +7,13 @@
     n1 -- first multiplicant, in binary, <= nTest bits
     n2 -- second multiplicant, in binary, <= nTest bits"))
 
-;;Create integer from bit vector
+;;Create integer from bit vector, use this just to check max integer size of nTest bit integer
 ;;via http://www.lispforum.com/viewtopic.php?f=2&t=1205#p6269
 (defun bit-vector->integer (bit-vector)
   "Create a positive integer from a bit-vector."
   (reduce #'(lambda (first-bit second-bit)
               (+ (* first-bit 2) second-bit))
           bit-vector))
-
-;;Create bit vector from integer
-;;via http://www.lispforum.com/viewtopic.php?f=2&t=1205#p6269
-(defun integer->bit-vector (integer)
-  "Create a bit-vector from a positive integer."
-  (labels ((integer->bit-list (int &optional accum)
-             (cond ((> int 0)
-                    (multiple-value-bind (i r) (truncate int 2)
-                      (integer->bit-list i (push r accum))))
-                   ((null accum) (push 0 accum))
-                   (t accum))))
-     (coerce (integer->bit-list integer) 'bit-vector)))
 
 ;;;Define vars needed to handle command line args
 (let (args nTest n1 n2 rtnVal)
@@ -52,5 +40,6 @@
   
   ;;args are good, lets do the multiplication now....
   (setf rtnVal (b* nTest n1 n2))
+  ;;and print out what happened...
   (format t "In Binary..... ~A x ~A is ~B ~%" (nth 1 args) (nth 2 args) rtnVal) 
   (format t "In Decimal.... ~A x ~A is ~A ~%" n1 n2 rtnVal)) 
