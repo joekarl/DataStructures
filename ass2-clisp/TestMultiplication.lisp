@@ -15,8 +15,20 @@
               (+ (* first-bit 2) second-bit))
           bit-vector))
 
+;;Create bit vector from integer
+;;via http://www.lispforum.com/viewtopic.php?f=2&t=1205#p6269
+(defun integer->bit-vector (integer)
+  "Create a bit-vector from a positive integer."
+  (labels ((integer->bit-list (int &optional accum)
+             (cond ((> int 0)
+                    (multiple-value-bind (i r) (truncate int 2)
+                      (integer->bit-list i (push r accum))))
+                   ((null accum) (push 0 accum))
+                   (t accum))))
+     (coerce (integer->bit-list integer) 'bit-vector)))
+
 ;;;Define vars needed to handle command line args
-(let (args nTest n1 n2)
+(let (args nTest n1 n2 rtnVal)
   
   ;;parse command line args
   (setf args (command-line-args))
@@ -39,4 +51,6 @@
       (quit 1)))
   
   ;;args are good, lets do the multiplication now....
-  (format t "Multiplication result for ~A x ~A is ~A~%" n1 n2 (b* nTest n1 n2))) 
+  (setf rtnVal (b* nTest n1 n2))
+  (format t "In Binary..... ~A x ~A is ~B ~%" (nth 1 args) (nth 2 args) rtnVal) 
+  (format t "In Decimal.... ~A x ~A is ~A ~%" n1 n2 rtnVal)) 
