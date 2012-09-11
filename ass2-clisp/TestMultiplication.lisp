@@ -8,14 +8,13 @@
     n1 -- first multiplicant, in binary, <= nTest bits
     n2 -- second multiplicant, in binary, <= nTest bits"))
 
+;;Find the next factor of 2 above a given number
 (defun normalize-to-factor-of-2 (n)
   (let (next-factor)
     (setf next-factor 1)
     (loop
       (if (>= next-factor n) (return))
-      (format t "next factor from ~A currently is ~A~%" n next-factor)
       (setf next-factor (ash next-factor 1)))
-    (format t "next factor from ~A is ~A~%" n next-factor)
     next-factor))
 
 ;;;Define vars needed to handle command line args
@@ -44,10 +43,10 @@
   ;;args are good, lets do the multiplication now....
   (setf bl1 (coerce (integer->bit-vector n1) 'list))
   (setf bl2 (coerce (integer->bit-vector n2) 'list))
- 
+
+  ;;do the multiplication with a normalized bit length 
   (setf rtnVal (b* (normalize-to-factor-of-2 nTest) bl1 bl2))
-  ;;(setf rtnVal (b* nTest bl1 bl2))
   
   ;;and print out what happened...
-  (format t "~%In Binary..... ~A x ~A is ~A ~%" (nth 1 args) (nth 2 args) rtnVal) 
+  (format t "~%In Binary..... ~A x ~A is ~B ~%" (nth 1 args) (nth 2 args) (bit-vector->integer rtnVal)) 
   (format t "In Decimal.... ~A x ~A is ~A ~%" n1 n2 (bit-vector->integer rtnVal))) 

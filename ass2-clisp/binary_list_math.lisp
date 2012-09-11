@@ -1,4 +1,3 @@
-
 (load "./binary_list_manipulation.lisp")
 
 ;;;Binary list shift left function (b<<)
@@ -12,6 +11,7 @@
       (loop for i from 0 below (list-length l) do
         (setf isZero (= 0 (nth i l)))
         (if (not isZero) (return-from escape))))
+    ;;if number is zero, don't do bit shifting...
     (if isZero '(0)
       ;;declare return value and temp list
       (let (r temp)
@@ -33,12 +33,12 @@
 ;;;returns a list that has the added numbers from the passed in binary lists....
 (defun b+ (n1 n2)
   (let (carryBit r copyN1 copyN2 maxLength)
+    ;;strip extra zeros from numbers before adding them
     (setf copyN1 (clean-list n1))
     (setf copyN2 (clean-list n2))
     (setf maxLength (if (> (list-length copyN1) (list-length copyN2)) (list-length copyN1) (list-length copyN2)))
     (setf copyN1 (pad-list copyN1 maxLength))
     (setf copyN2 (pad-list copyN2 maxLength))
-    ;;(if (> maxLength 5) (format t "n1 length ~A n2 length ~A maxLength ~A~%" (list-length n1) (list-length n2) maxLength))
     (setf r ())
     (setf carryBit 0)
     ;;loop from right most bit to left most bit
@@ -59,8 +59,8 @@
             1 0))
         (setf r (append (list binAddResult) r))))
       (if (= 1 carryBit) (setf r (append (list carryBit) r)))
+    ;;strip extra zeros from finished addition
     (setf r (clean-list r))
-    ;;(if (and copyN1 copyN2 r) (format t "Adding ~A and ~A and got ~A~%" (bit-vector->integer copyN1) (bit-vector->integer copyN2)  (bit-vector->integer r)))
     r))
 
 ;;;Binary list multiplication function (b*)

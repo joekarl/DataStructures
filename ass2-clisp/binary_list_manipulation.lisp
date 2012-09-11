@@ -31,10 +31,12 @@
 (defun clean-list (l)
   (let (startIndex)
     (setf startIndex 0)
+    ;;find where the number actually begins
     (block escape
       (loop for i from 0 below (list-length l) do
         (let (n) 
           (setf n (nth i l))
           (if (> n 0) (return-from escape))
           (setf startIndex (+ startIndex 1)))))
+    ;;make a new list from where the number starts
     (subseq l startIndex)))
