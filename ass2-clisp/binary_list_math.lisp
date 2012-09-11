@@ -92,7 +92,7 @@
     (setf yr (subseq n2 n/2))
     ;;calculate m
     (setf m (- nBits n/2))
-    (format t "nBits ~A n/2 ~A m ~A~%" nBits n/2 m)
+    ;(format t "nBits ~A n/2 ~A m ~A~%" nBits n/2 m)
     
     (if
       (= nBits 1)

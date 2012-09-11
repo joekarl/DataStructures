@@ -8,6 +8,16 @@
     n1 -- first multiplicant, in binary, <= nTest bits
     n2 -- second multiplicant, in binary, <= nTest bits"))
 
+(defun normalize-to-factor-of-2 (n)
+  (let (next-factor)
+    (setf next-factor 1)
+    (loop
+      (if (>= next-factor n) (return))
+      (format t "next factor from ~A currently is ~A~%" n next-factor)
+      (setf next-factor (ash next-factor 1)))
+    (format t "next factor from ~A is ~A~%" n next-factor)
+    next-factor))
+
 ;;;Define vars needed to handle command line args
 (let (args nTest bl1 bl2 n1 n2 rtnVal maxSize)
   
@@ -32,12 +42,11 @@
       (quit 1)))
   
   ;;args are good, lets do the multiplication now....
-  (setf bl1 (pad-list (coerce (integer->bit-vector n1) 'list) nTest))
-  (setf bl2 (pad-list (coerce (integer->bit-vector n2) 'list) nTest))
-
-  
+  (setf bl1 (coerce (integer->bit-vector n1) 'list))
+  (setf bl2 (coerce (integer->bit-vector n2) 'list))
  
-  (setf rtnVal (b* nTest bl1 bl2))
+  (setf rtnVal (b* (normalize-to-factor-of-2 nTest) bl1 bl2))
+  ;;(setf rtnVal (b* nTest bl1 bl2))
   
   ;;and print out what happened...
   (format t "~%In Binary..... ~A x ~A is ~A ~%" (nth 1 args) (nth 2 args) rtnVal) 
