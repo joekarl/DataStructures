@@ -1,0 +1,30 @@
+(load "./binary_list_manipulation.lisp")
+(load "./binary_list_math.lisp")
+
+(setf l '(1 0 1 0 0 1))
+(format t "Testing padding~%")
+(format t "List was ~A, after padding to 10 is now ~A~%" l (pad-list l 10))
+(format t "List was ~A, after padding to 18 is now ~A~%" l (pad-list l 18))
+
+(setf l2 '(0 0 0 1 0 0 1 0 0 1))
+(format t "Testing clean list~%")
+(format t "List was ~A, after cleaning is now ~A~%" l2 (clean-list l2))
+
+(format t "~%Testing left shifting~%")
+(format t "List was ~A, after shifting by 1 is now ~A~%" '() (b<< '() 1))
+(format t "List was ~A, after shifting by 1 is now ~A~%" l (b<< l 1))
+(format t "List was ~A, after shifting by 2 is now ~A~%" l (b<< l 2))
+(format t "List was ~A, after shifting by 3 is now ~A~%" l (b<< l 3))
+
+(format t "~%Testing addition~%")
+(format t "List was ~A, after adding (1) is now ~A~%" '() (b+ '() '(1)))
+(format t "List was ~A, after adding (1) is now ~A~%" '(1) (b+ '(1) '(1)))
+(format t "List was ~A, after adding (0) is now ~A~%" '(0) (b+ '(0) '(0)))
+(format t "List was ~A, after adding (0 0 0 0 0 1) is now ~A~%" l (b+ l '(0 0 0 0 0 1)))
+(format t "List was ~A, after adding (0 0 0 0 1 1) is now ~A~%" l (b+ l '(0 0 0 0 1 1)))
+
+(format t "~%Testing multiplication~%")
+(format t "~%Multiplying 1 * 1 and got ~A~%" (b* 1 '(1) '(1)))
+(format t "~%Multiplying 2 * 1 and got ~A~%" (b* 3 '(0 1 0) '(0 0 1)))
+(format t "~%Multiplying 3 * 1 and got ~A~%" (b* 3 '(0 1 1) '(0 0 1)))
+(format t "~%Multiplying 2 * 2 and got ~A~%" (b* 3 '(0 1 0) '(0 1 0)))

@@ -1,5 +1,6 @@
 (load "./command_line_args.lisp")
-(load "./binary_multiplication.lisp")
+(load "./binary_list_manipulation.lisp")
+(load "./binary_list_math.lisp")
 
 (defun print-usage()
   (print "Usage -- clisp TestMultiplication.lisp <nTest> <n1> <n2>
@@ -7,16 +8,8 @@
     n1 -- first multiplicant, in binary, <= nTest bits
     n2 -- second multiplicant, in binary, <= nTest bits"))
 
-;;Create integer from bit vector, use this just to check max integer size of nTest bit integer
-;;via http://www.lispforum.com/viewtopic.php?f=2&t=1205#p6269
-(defun bit-vector->integer (bit-vector)
-  "Create a positive integer from a bit-vector."
-  (reduce #'(lambda (first-bit second-bit)
-              (+ (* first-bit 2) second-bit))
-          bit-vector))
-
 ;;;Define vars needed to handle command line args
-(let (args nTest n1 n2 rtnVal)
+(let (args nTest bl1 bl2 n1 n2 rtnVal maxSize)
   
   ;;parse command line args
   (setf args (command-line-args))
@@ -39,7 +32,13 @@
       (quit 1)))
   
   ;;args are good, lets do the multiplication now....
-  (setf rtnVal (b* nTest n1 n2))
+  (setf bl1 (pad-list (coerce (integer->bit-vector n1) 'list) nTest))
+  (setf bl2 (pad-list (coerce (integer->bit-vector n2) 'list) nTest))
+
+  
+ 
+  (setf rtnVal (b* nTest bl1 bl2))
+  
   ;;and print out what happened...
-  (format t "In Binary..... ~A x ~A is ~B ~%" (nth 1 args) (nth 2 args) rtnVal) 
-  (format t "In Decimal.... ~A x ~A is ~A ~%" n1 n2 rtnVal)) 
+  (format t "~%In Binary..... ~A x ~A is ~A ~%" (nth 1 args) (nth 2 args) rtnVal) 
+  (format t "In Decimal.... ~A x ~A is ~A ~%" n1 n2 (bit-vector->integer rtnVal))) 
