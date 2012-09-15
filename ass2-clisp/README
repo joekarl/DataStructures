@@ -1,3 +1,6 @@
+
+
+
 ====== How to run =======
 `clisp TestMultiplication.lisp <nTest> <n1 (in binary)> <n2 (in binary)>`
 
