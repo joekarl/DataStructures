@@ -3,7 +3,7 @@
 (load "./binary_list_math.lisp")
 
 (defun print-usage()
-  (print "Usage -- clisp TestMultiplication.lisp <nTest> <n1> <n2>
+  (print "Usage -- clisp TestMultiplication.lisp [<nTest>] [<n1>] [<n2>]
     nTest -- number of bits per muliplicant (must be <= 128)
     n1 -- first multiplicant, in binary, <= nTest bits
     n2 -- second multiplicant, in binary, <= nTest bits"))
@@ -26,15 +26,23 @@
   (if (nth 1 args) (setf n1 (parse-integer (nth 1 args) :radix 2)))
   (if (nth 2 args) (setf n2 (parse-integer (nth 2 args) :radix 2)))
 
+  ;;if args weren't passed in, lets interactively ask the user for args...
+  (if (not (= (list-length args) 3))
+    (progn
+      (print "Enter number of bits to use for multiplying numbers")
+      (setf nTest (parse-integer (read-line)))
+      (print "Enter the first number in binary")
+      (setf n1 (parse-integer (read-line) :radix 2))
+      (print "Enter the second number in binary")
+      (setf n2 (parse-integer (read-line) :radix 2))))
+
   ;;test to see if command line args are valid
   (if 
     (or
-      (null args)
       (null nTest)
       (not (<= nTest 128))
       (not (<= n1 (bit-vector->integer (make-array nTest :initial-element 1))))
-      (not (<= n2 (bit-vector->integer (make-array nTest :initial-element 1))))
-      (not (= (list-length args) 3)))
+      (not (<= n2 (bit-vector->integer (make-array nTest :initial-element 1)))))
     (progn
       (print "Invalid Usage")
       (print-usage)
