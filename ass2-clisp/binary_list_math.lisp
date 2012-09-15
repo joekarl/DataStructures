@@ -17,6 +17,7 @@
       (let (r temp)
         ;;copy l into temp list for shifting
         (setf temp (clean-list l))
+        ;;do shifting one bit at a time
         (loop for i from 0 below shiftNum do
           (progn 
             ;;setup return value to be an empty list
@@ -36,6 +37,7 @@
     ;;strip extra zeros from numbers before adding them
     (setf copyN1 (clean-list n1))
     (setf copyN2 (clean-list n2))
+    ;;decide which list is longer
     (setf maxLength (if (> (list-length copyN1) (list-length copyN2)) (list-length copyN1) (list-length copyN2)))
     (setf copyN1 (pad-list copyN1 maxLength))
     (setf copyN2 (pad-list copyN2 maxLength))
@@ -57,7 +59,9 @@
               (= 2 addResult)
               (= 3 addResult))
             1 0))
+        ;;append the add result
         (setf r (append (list binAddResult) r))))
+      ;;if we have a leftover carry bit, add it to the beginning of the array
       (if (= 1 carryBit) (setf r (append (list carryBit) r)))
     ;;strip extra zeros from finished addition
     (setf r (clean-list r))
@@ -92,7 +96,6 @@
     (setf yr (subseq n2 n/2))
     ;;calculate m
     (setf m (- nBits n/2))
-    ;(format t "nBits ~A n/2 ~A m ~A~%" nBits n/2 m)
     
     (if
       (= nBits 1)
@@ -100,12 +103,23 @@
       (progn
         (setf r (if (and (= (nth 0 (last n1)) 1) (= (nth 0 (last n2)) 1)) '(1) '(0)))
         r)
-      ;;if we haven't hit base case (when nBits is 1) do algorithm and take advantage of tail call elimination so we never have to worry about a stack overflow o_0
+      
+      ;;if we haven't hit base case (when nBits is 1) do algorithm 
+      ;;
+      ;; xl * yl * 2^2m + (xl * yr + xr * yl) * 2^m + xr * yr
+      ;;
+      ;;or broken out
+      ;;
+      ;;        (xl*yl*2^2m) 
+      ;;                   +
+      ;; (xl*yr + xr*yl)*2^m
+      ;;                   +
+      ;;             (xr*yr)
+      ;;
       (progn
-
         (b+ 
           (b+ 
-            (b<< (b* m xl yl) nBits) 
+            (b<< (b* m xl yl) (+ m m)) 
             (b<< (b+ 
                     (b* m xl yr) 
                     (b* m xr yl)) 

@@ -26,6 +26,9 @@
   (if (nth 1 args) (setf n1 (parse-integer (nth 1 args) :radix 2)))
   (if (nth 2 args) (setf n2 (parse-integer (nth 2 args) :radix 2)))
 
+  (format t "n1 length ~A~%" (length (nth 1 args)))
+  (format t "n2 length ~A~%" (length (nth 2 args)))
+
   ;;test to see if command line args are valid
   (if 
     (or
@@ -45,7 +48,8 @@
   (setf bl2 (coerce (integer->bit-vector n2) 'list))
 
   ;;do the multiplication with a normalized bit length 
-  (setf rtnVal (b* (normalize-to-factor-of-2 nTest) bl1 bl2))
+  ;;(setf rtnVal (b* (normalize-to-factor-of-2 nTest) bl1 bl2))
+  (setf rtnVal (b* nTest bl1 bl2))
   
   ;;and print out what happened...
   (format t "~%In Binary..... ~A x ~A is ~B ~%" (nth 1 args) (nth 2 args) (bit-vector->integer rtnVal)) 

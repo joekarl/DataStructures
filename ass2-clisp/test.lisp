@@ -15,9 +15,12 @@
 (format t "List was ~A, after shifting by 1 is now ~A~%" l (b<< l 1))
 (format t "List was ~A, after shifting by 2 is now ~A~%" l (b<< l 2))
 (format t "List was ~A, after shifting by 3 is now ~A~%" l (b<< l 3))
+(format t "List was ~A, after shifting by 300 is now ~B~%" l (bit-vector->integer (b<< l 300)))
 
 (format t "~%Testing addition~%")
+(format t "List was ~A, after adding () is now ~A~%" '() (b+ '() '()))
 (format t "List was ~A, after adding (1) is now ~A~%" '() (b+ '() '(1)))
+(format t "List was ~A, after adding () is now ~A~%" '(1) (b+ '(1) '()))
 (format t "List was ~A, after adding (1) is now ~A~%" '(1) (b+ '(1) '(1)))
 (format t "List was ~A, after adding (0) is now ~A~%" '(0) (b+ '(0) '(0)))
 (format t "List was ~A, after adding (0 0 0 0 0 1) is now ~A~%" l (b+ l '(0 0 0 0 0 1)))
