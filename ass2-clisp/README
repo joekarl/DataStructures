@@ -1,10 +1,43 @@
 
-
-
 ====== How to run =======
 `clisp TestMultiplication.lisp <nTest> <n1 (in binary)> <n2 (in binary)>`
 
 Example
 `clisp TestMultiplication.lisp 4 1010 0010`
 
+--or--
+`clisp TestMultiplication.lisp` and then fill in the requested information
 
+
+====== Run tests ======
+`clisp test.lisp`
+
+
+====== Problem Statement =======
+
+A common approach using stepwise re.nement to solving a problem P is to:
+(a) partition the problem P into smaller subproblems P1, P2, . . .,
+(b) .nd solutions for P1, P2, . . ., and
+(c) combine the solutions for P1, P2, . . . into a solution for the whole P.
+The .smaller. refers to the size of the problem - some measure that re.ects the di.culty of the problem. For example, when searching for an element in a list, the length of the list is related to the complexity of the searching problem.
+
+This programming exercise shows how this divide-and-conquer approach is used as a basis for a multiplication algorithm for two n-bit integers.
+
+For given two integers x and y in two n-bit binary sequences (x0, x1, . . . , xn.1) and (y0, y1, . . . , yn.1), respectively (higher-order bit at index 0 and lower-index bit at index n.1), partition x (y) into two halves as evenly as possible, and call xL and xR (respectively, yL and yR) the left and right halves of x (respectively, y). More formally, let m = n/2 (ceil), and write 
+x = xL * 2^m + xR
+y = yL * 2^m + yR,
+
+where xL and yL are numbers with n - m = n/2 (floor) bits, and xR and yR are numbers with m bits. 
+
+Now,
+x * y = (xL * 2^m + xR) * (yL * 2^m+ yR) = xLyL * 2^2m + (xLyR + xRyL) * 2^m+ xRyR.
+
+The solutions for the four subproblems (multiplications): xLyL, xLyR, xRyL, and xRyR, and the multiplications by powers of 2 (that is, bit-shifting operations), and the additions can be combined to yield the solution for the original multiplication.
+
+The multiplication algorithm can be implemented by such recursive divide-and-conquer approach: the four multiplications for numbers with at most n/2 bits are smaller versions of the original multiplication for numbers with n bits, each of which can be solved recursively.
+
+1. Develop and implement the above recursive algorithm in a method named multiplication.
+The driver (main) program, named TestMultiplication, prompts the user to enter: the nTest for the bit-length of the two integers to be multiplied (limited to at most 128 bits), and the two integers - each is represented in exactly nTest bits. [ You may assume that the nTest bits are nTest integers (0 or 1) separated by space(s). ]
+Your main program encapsulating the implementations of the necessary packages/subprograms and testing code should incorporate adequate documentation and good programming styles. (When in doubt, please ask.) Also, subprograms should be properly documented with objectives, pre- and post-conditions.
+
+Develop a simple plan for implementing, testing, and debugging your program. Use bottom-up testing to complement the top-down approach.
