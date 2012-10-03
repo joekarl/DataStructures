@@ -22,7 +22,7 @@ class Array
   end
 
   #define private methods....
-  private
+  #private
   
   attr_accessor :heap_size
   
@@ -105,7 +105,7 @@ class Array
       mid = end_node_index
     else
       #calculate the mid point of the path
-      mid_advances = 0.5 * Math.log(end_node_index) / Math.log(2)
+      mid_advances = 0.5 * height_of_heap(start_node_index)
       mid = end_node_index
       mid_advances.floor.downto(1) do |i|
         mid = parent_index(mid)
@@ -165,6 +165,16 @@ class Array
       next_child = end_node_index
     end 
     next_child
+  end
+
+  def height_of_heap(i)
+    height = 0
+    start_index = @heap_size
+    while start_index >= i
+      height++
+      start_index = parent_index(start_index)
+    end
+    height
   end
 
   #returns the index of the parent of a heap node  
