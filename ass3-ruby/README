@@ -1,0 +1,50 @@
+
+============= Heapsort implementation =================
+This heap implementation is implemented as a (ruby) mixin for the Array class.
+By making this a mixin, we can treat the array as a heap directly (for internal purposes).
+We only expose a public heapsort method so despite the fact that we've internally changed the array class 
+(by adding the different heap helper methods) users need not know that this is the case.
+
+Use of heapsort is simple. By including the mixin, all arrays will now have a heapsort method.
+`[3,5,2,6].heapsort` => [2,3,5,6]
+
+============== Problem description ==================
+The Heapsort algorithm provides an O(n log n)-time worst-case sorting algorithm. This problem concerns with
+constant-factor improvements (the hidden constant in the asymptotic notation) in the running time of Heapsort that
+can be achieved by reducing the number of comparisons of data/key items. The key to these improvements is in the
+implementation of HeapifyDownward (that is, the Max Heapify algorithm in our text). A simple implementation
+The Heapsort algorithm provides an O(n log n)-time worst-case sorting algorithm. This problem concerns with
+constant-factor improvements (the hidden constant in the asymptotic notation) in the running time of Heapsort that
+can be achieved by reducing the number of comparisons of data/key items. The key to these improvements is in the
+implementation of HeapifyDownward (that is, the Max Heapify algorithm in our text). A simple implementation
+of the HeapifyDownward algorithm requires about 2 log2 n data/key item comparisons in the worst case.
+
+Design and implement an efficient HeapifyDownward algorithm that reduces the number of data/key item com-
+parisons to about log2 n in the worst case. Note: No credit will be given to implementations that do not satisfy
+the running time constraint.
+Apply the efficient HeapifyDownward to implement the Heapsort algorithm.
+
+========== Run ===========
+`ruby main.rb`
+
+========== Explanation of Heapify Downward ===============
+In plain language pseudo code.....
+
+By the end of this method, we've only used lg(n) + lg(lg(n)) comparisons 
+so for sufficiently large n, we arrive at a bound of lg(n) comparisons
+
+def heapify_downward(i)
+  #find the lowest node index that the node i could fall to
+  #!!!!!!!!!! this runs with a maximum number lg(n) comparisons !!!!!!!!!!!!!
+  
+  #stash the value of node i for later
+
+  #search for the eventual final index where node i will fall and store it in the swap node
+  #!!!!!!!!!1 this runs with a maximum number lg(lg(n)) comparisons !!!!!!!!!!!!
+
+  #Move all parent nodes from the swap node index, up one level
+  
+  #finally set the swap node index value to be our initial value 
+end
+
+
