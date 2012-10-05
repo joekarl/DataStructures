@@ -35,7 +35,7 @@ class TestHeapsort < Test::Unit::TestCase
         last = val
       end
 
-      assert !failed, "Failed to sort array #{copy_a} and ended with #{a}"
+      assert !failed, "Failed to sort array #{copy_a.inspect} and ended with #{a.inspect}"
     end
   end
 end
