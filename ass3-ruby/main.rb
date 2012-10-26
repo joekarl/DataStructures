@@ -19,7 +19,7 @@ puts "--------------------------------------------------------------------------
 
 class TestHeapsort < Test::Unit::TestCase
   def test_heapsort
-    (0..1000).each do |x|
+    (0...1000).each do |x|
       puts "Testing permutation #{x + 1}"
       a = []
       seed = srand()
