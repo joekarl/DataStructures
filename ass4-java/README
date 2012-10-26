@@ -1,0 +1,64 @@
+[Programming Problem]
+Implement three algorithms that: (1) transforms an arithmetic expression into an expression tree, (2) transforms
+an expression tree into post.x form, and (3) evaluates an arithmetic expression.
+
+(a) Arithmetic expressions in the input domain are fully parenthesized well-formed arithmetic expression with
+binary operators in {+, ., ., /} and unsigned integer literals. You may need an auxiliary algorithm that
+prompts the user for a fully parenthesized well-formed arithmetic expression with arbitrary spacing and store
+its compact form (without the unnecessary spaces) in an array or string. Examples of input arithmetic
+expressions:
+  (100 )
+  (100 + 200 )
+  (100 . (200 . 300))
+  ( (100 . (200 + 300)) . ( (400 . 200)/ (100 + 100) ))
+
+(b) Expression-to-tree algorithm: You may assume that the arithmetic expression is compactified. Choose an
+appropriate data structures to represent expression trees. Note that internal vertices store binary operators
+whereas leaf vertices store literals.
+
+(c) Tree-to-Postfix algorithm: Postorder traversal will be covered in lecture and in [CLRS09] Chapter 12 in the
+context of binary search tree. A postorder of an expression tree yields the postfix form of the arithmetic
+expression.
+
+(d) Evaluation algorithm: You may assume that the input arithmetic expression is compacti.ed. Evaluate an
+input arithmetic expression in two ways: via its expression tree and via its postfix form . which will be
+covered in lecture
+
+
+=============== Implementation Details ==================
+The application is written in Java and stored in an executable jar (ExpressionSolver.jar).
+There is a Makefile to build the jar.
+Solving the problem statement:
+
+a) The application accepts input via a command line argument (see the Run section of this README)
+   This input is tokenized into expression elements (operator, number, perenthesis)
+
+b) The application loops through the expression elements (from (a)) and uses an intermediate stack to properly construc an expression tree.
+   Expression trees are implemented by the CompoundExpression Class, this class stores and operator and children.
+   Leafs are implemented by the Constant Class, this class stores a numeric value.
+   Both CompoundExpression and Constant implement the Expression interface which allows a uniform way to walk the expression tree.
+
+c) The Expression interface requires all subclasses to implement the walkTree method. This method requires a specified WalkOrder which details how to walk the expression tree. This method also requires a WalkExecutor which gets called at each node in the expression tree. 
+
+d) To evaluate via the expression tree, all we need to do is call execute on the root of the tree and let it recurse through all of the child expressions till we're finished and have an answer. 
+   To evaluate via postfix expression, we use the walkTree method with the PostOrder WalkOrder. This will visit each expression in the tree in postfix order. We also supply a WalkExecutor which takes each expression in the walk and if its a Constant, pushes that value onto the stack. If its a CompoundExpression, we get that expression's operator, use it to evaluate the last two values on the stack, and then push the result onto the stack. By the end of this process, whatever value is left on the stack is our result. 
+
+
+=============== To Build ===============
+`make`
+will output the ExpressionSolver jar file
+
+=============== To Clean ================
+`make clean`
+will delete the build folder and the jar file
+
+=============== To Run ==============
+`java -jar ExpressionSolver.jar "<arithmetic expression>"`
+
+=============== Test cases ============
+The given expressions were used as test cases and are used in the run.sh script.
+to run the run.sh script:
+`sh run.sh`
+
+
+
