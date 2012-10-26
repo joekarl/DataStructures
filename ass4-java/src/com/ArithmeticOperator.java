@@ -21,6 +21,7 @@ import java.lang.Number;
  */
 public abstract class ArithmeticOperator<T1 extends Number,T2 extends Number,T extends Number> implements Operator<T1,T2,T> {
 
+  //convenience method to get an instance of an operator based on an operator string
   public static <T1 extends Number,T2 extends Number,T extends Number> ArithmeticOperator<T1,T2,T> operatorForString(String op, Class<T> clazz) {
     if (clazz != Integer.class) {
       throw new UnsupportedOperationException();
@@ -38,6 +39,7 @@ public abstract class ArithmeticOperator<T1 extends Number,T2 extends Number,T e
     }
   }
 
+  //integer operator classes
   public static class INTEGER {
     public static class Add extends ArithmeticOperator<Integer, Integer, Integer> {
       public Integer operate(Integer lSide, Integer rSide) {

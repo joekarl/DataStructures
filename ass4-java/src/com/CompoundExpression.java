@@ -5,9 +5,18 @@ import com.Expression;
 import com.Expression.WalkExecutor;
 import com.WalkOrder;
 
+/*
+ * A class to model a compound expression (has an explicite left and right side)
+ * An implementation of Expression
+ * Requires a left and right side expression type as well as and expression return type
+ *
+ */
 public class CompoundExpression<T1,T2,T> implements Expression<T> {
+  //left side of this expression
   public Expression<T1> lExp;
+  //right side of this expression
   public Expression<T2> rExp;
+  //operator to be applied on left and right side expressions
   public Operator<T1, T2, T> optr;
 
   public CompoundExpression(){}
@@ -18,6 +27,8 @@ public class CompoundExpression<T1,T2,T> implements Expression<T> {
     this.optr = optr;
   }
 
+  //use operator to act upoon the results of the left and right expressions
+  //returns the specified return type T
   @SuppressWarnings("unchecked")
   public T execute() {
     if (lExp == null || rExp == null) {
@@ -29,6 +40,9 @@ public class CompoundExpression<T1,T2,T> implements Expression<T> {
     return optr.operate(lExp.execute(), rExp.execute());
   }
 
+  //implementation of walkTree
+  //executes the left and right side expressions 
+  //and calls the executor in the correct spot based on the WalkOrder
   public void walkTree(WalkOrder order, WalkExecutor executor) {
     if (order == WalkOrder.PREORDER) {
       executor.execute(this);
@@ -48,7 +62,7 @@ public class CompoundExpression<T1,T2,T> implements Expression<T> {
   }
 
   public String toString() {
-    return optr != null ? optr.toString() : "NO OPERATOR";
+    return optr != null ? optr.toString() : "";
   }
 
 }

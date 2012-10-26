@@ -15,6 +15,8 @@ public class Main {
     if (args.length == 1) {
       System.out.println("Input expression: " + args[0]);
       String token = "";
+      //Loop through each character
+      //Seperate each token from the expression and ignore the whitespace
       for(int i = 0; i < args[0].length(); ++i) {
         char c = args[0].charAt(i);
         switch(c) {
@@ -67,9 +69,15 @@ public class Main {
       }
     }
 
+
+    //We need to keep expressions on a stack while we're building the tree
+    //This is because our tree is only a one way tree 
+    //so we can't rely on the child expressions having a reference to their parent
     Stack<CompoundExpression<Integer,Integer,Integer>> expressionStack = new Stack<CompoundExpression<Integer,Integer,Integer>>();
     CompoundExpression<Integer,Integer,Integer> currentExpression = null;
 
+    //If expression Tokens is empty or a malformed expression
+    //create a dummy expression so the program doesn't crash...
     if (!expressionTokens.isEmpty() && !"(".equals(expressionTokens.get(0))) {
       currentExpression = new CompoundExpression<Integer,Integer,Integer>();
       expressionStack.push(currentExpression);
@@ -79,9 +87,12 @@ public class Main {
     //now lets build an expression tree
     for(String token : expressionTokens) {
       if ("(".equals(token)) {
+        //start of an expression push it onto our stack
         currentExpression = new CompoundExpression<Integer,Integer,Integer>();
         expressionStack.push(currentExpression);
       } else if (")".equals(token)) {
+        //end of an expression
+        //pop the current expression so we can assign it to it's parent if it has one
         CompoundExpression<Integer,Integer,Integer> leafExpression = expressionStack.pop();
         if (!expressionStack.isEmpty()) {
           currentExpression = expressionStack.peek(); 
@@ -89,6 +100,8 @@ public class Main {
           currentExpression = null;
         }
         if (leafExpression != null && currentExpression != null) {
+          //if the leafExpression has a parent
+          //assign the leaf to either the parent's left or ride side
           if (currentExpression.lExp == null) {
             currentExpression.lExp = leafExpression; 
           } else {
@@ -96,14 +109,20 @@ public class Main {
           }
         }
         if (currentExpression == null) {
+          //if the leaf is the root expression
+          //leave it as the current expression
           currentExpression = leafExpression;
         }
       } else if ("+".equals(token)
           || "-".equals(token)
           || "/".equals(token)
           || "*".equals(token)) {
+        //Get the appropriate arithmetic operator and assign it
+        //to the current expression
         currentExpression.optr = ArithmeticOperator.<Integer,Integer,Integer>operatorForString(token,Integer.class); 
       } else {
+        //this is a number
+        //create a new constant and assign it to the current expression left or right
         if (currentExpression.lExp == null) {
           currentExpression.lExp = new Constant<Integer>(Integer.valueOf(token));
         } else if (currentExpression.rExp == null) {
@@ -113,9 +132,11 @@ public class Main {
     }
 
     //At this point, currentExpression is the root of our expression tree
-    //Evaluate via the expression tree in the usual way
+    //Evaluate via the expression tree in the usual way via recursion
     System.out.println("Eval Expression Tree: " + currentExpression.execute());
 
+
+    //Just for grins, lets print out members of the expression via preorder traversal
     System.out.print("PreOrder: ");
     currentExpression.walkTree(WalkOrder.PREORDER, new Expression.WalkExecutor() {
       
@@ -127,6 +148,7 @@ public class Main {
 
     System.out.println("");
     
+    //Just for grins, lets print out members of the expression via inorder traversal
     System.out.print("InOrder: ");
     currentExpression.walkTree(WalkOrder.INORDER, new Expression.WalkExecutor() {
       
@@ -138,6 +160,7 @@ public class Main {
 
     System.out.println("");
 
+    //Just for grins, lets print out members of the expression via postorder traversal
     System.out.print("PostOrder: ");
     currentExpression.walkTree(WalkOrder.POSTORDER, new Expression.WalkExecutor() {
       
@@ -151,15 +174,19 @@ public class Main {
 
     
 
-    final Stack<Integer> postfixStack = new Stack<Integer>();
     //Evaluate via postfix traversal
+    final Stack<Integer> postfixStack = new Stack<Integer>();
     currentExpression.walkTree(WalkOrder.POSTORDER, new Expression.WalkExecutor() {
 
       public void execute(Expression exp) {
         if (exp instanceof Constant) {
+          //if we're a number, push on the stack
           Constant<Integer> constant = (Constant<Integer>) exp;
           postfixStack.push(constant.value);
         } else if (exp instanceof CompoundExpression) {
+          //if we're a compound expression
+          //get the operator, use it to eval the last two numbers on the stack
+          //then push the result back onto the stack
           Operator<Integer, Integer, Integer> optr = ((CompoundExpression<Integer, Integer, Integer>) exp).optr;
           if (optr != null) {
             Integer rSide = postfixStack.pop();
@@ -171,6 +198,7 @@ public class Main {
 
     });
 
+    //print out the result which is the last number in the stack after traversal
     System.out.println("Result from postorder evaluation: " + postfixStack.pop());
 
   }
