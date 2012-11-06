@@ -1,0 +1,105 @@
+===============Problem Statment ================
+All open-addressing hashing methods have excellent average-case performance, but their worst-case performance
+is abysmal. One approach to improving the worst-case performance is to re-organize the hash table when inserting
+a new record/key. We modify Insert for linear-probe hashing by inserting a new key in that key.s home cell, even
+if the home cell is occupied. The key that is forced out (if there is one) is moved to the next cell, and may in turn  force out another key, and so on. Both methods, modi.ed hashing and linear probing, have the same average-case
+  performance; the di.erence is that the modi.ed hashing method has a better worst-case performance. Implement
+  a comparison of linear-probe hashing and modified linear-probe hashing, by means of simulation, to confirm the
+  assertion on average-case performance.
+
+================= How to build =================
+To build Test program for when I was testing the hasing algorithms,
+`make test`
+This will spit out an executable named test.
+It just does some assertions and is pretty boring....
+
+To build the main comparison program run make
+`make`
+This will spit out an executable named open_address_hashing
+**********NOTE ******************* 
+This may take up to 30 seconds to run....
+
+================= Generating the probe sequences =================
+Linear Probe Hashing
+- Basically all we're doing here, is to increment the hash by 1 every time we have a collision.
+- So you might start with (below)
+  |---|
+ 1|   |
+  |---|
+ 2| x |
+  |---|
+ 3| y |
+  |---|
+ 4| z |
+  |---|
+ 5|   |
+  |---|
+ 6|   |
+  |---|
+ 7|   |
+  |---|
+
+- and if we want to insert a key(a) at slot 2 it would end up in slot 5
+  |---|
+ 1|   |
+  |---|
+ 2| x |
+  |---|
+ 3| y |
+  |---|
+ 4| z |
+  |---|
+ 5| a |
+  |---|
+ 6|   |
+  |---|
+ 7|   |
+  |---|
+- This causes a bad side effect of clustering....
+
+
+Modified Probe Hashing
+- This case is a bit different. 
+- Really what we're doing here is putting the key in the desired sport and shifting everything else down a key in the table
+- In the code, I just loop until I find an empty slot in the table
+- So you might start with this (below)
+  |---|
+ 1|   |
+  |---|
+ 2| x |
+  |---|
+ 3| y |
+  |---|
+ 4| z |
+  |---|
+ 5|   |
+  |---|
+ 6|   |
+  |---|
+ 7|   |
+  |---|
+
+- and if we want to insert a key(a) at slot 2 it would end up in slot 5
+  |---|
+ 1|   |
+  |---|
+ 2| a |
+  |---|
+ 3| x |
+  |---|
+ 4| y |
+  |---|
+ 5| z |
+  |---|
+ 6|   |
+  |---|
+ 7|   |
+  |---|
+- This again causes a bad side effect of clustering....
+
+======================== Outcomes =====================
+Surprisingly, I thought there would be a big difference in performance between the two, but I was wrong.
+The perform basically the same. This can probably be attributated to the fact that the clustering effects in both algorithms are identical due to the fact that the same inputs were used for both algorithms.
+
+
+
