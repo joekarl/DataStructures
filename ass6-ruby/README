@@ -1,0 +1,43 @@
+[Programming Problem]
+Given n keys from a totally ordered key universe, design and implement a fast algorithm that construct a minimum-height binary search tree for them. 
+Your main module should:
+(a) Obtain n keys/integers from user;
+(b) Construct a minimum-height binary tree for the n keys; and
+(c) Produce a traversal sequence of the minimum-height binary tree such that the structure of the binary search tree can be verified.
+
+
+==================================================================
+How to Run
+==================================================================
+`ruby main.rb`
+provide input when asked
+
+
+==================================================================
+Algorithm design
+==================================================================
+To start, we need to have the keys in a sorted order. 
+Once we have the sorted keys, we can recursively build the binary search tree by partitioning the array into two halves around a mid point. This mid point is the root of the current search tree and the left and right children are calculated using a recursive call using the respective halves of the array.
+In this manner we can build the binary search tree.
+
+
+==================================================================
+Time analysis
+==================================================================
+To build our tree, we have two discrete steps. 
+1) sort keys
+   I'm using a merge sort so this ends up being O(n lg n) worst case
+
+2) build tree from sorted array
+   This ends up being O(lg n) worst case with the recurrence being T(n) = 2T(n/2) + O(1)
+
+So overall we have the sort O(n lg n) + the build tree O(lg n) which normalized is O(n lg n) worst case 
+
+
+==================================================================
+If keys are already sorted....
+==================================================================
+I check to see if the keys are already sorted before blindly sorting them.
+This takes O(n) time but that is better than the best sort time which would be O(n lg n)
+This will boost our best case time (when the keys are already sorted) to be O(n) 
+
